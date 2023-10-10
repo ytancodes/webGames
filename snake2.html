@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            border: 1px solid black;
+        }
+
+        /* Style for direction control buttons */
+        #directionButtons {
+            display: flex;
+            flex-direction: row;
+        }
+
+        button {
+            margin: 5px;
+            font-size: 18px;
+        }
+
+        #upButton {
+            order: 1;
+        }
+
+        #downButton {
+            order: 3;
+        }
+
+        #leftButton {
+            order: 2;
+        }
+
+        #rightButton {
+            order: 4;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+        <!-- Direction control buttons -->
+        <div id="directionButtons">
+            <button id="upButton">Up</button>
+            <button id="leftButton">Left</button>
+            <button id="downButton">Down</button>
+            <button id="rightButton">Right</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const SNAKE_SIZE = 20;
+        const SPEED = 100;
+
+        let snake = [{ x: 100, y: 100 }];
+        let velocity = { x: SNAKE_SIZE, y: 0 };
+        let food = { x: 200, y: 200 };
+
+        function drawSnake() {
+            ctx.fillStyle = "green";
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x, segment.y, SNAKE_SIZE, SNAKE_SIZE);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, SNAKE_SIZE, SNAKE_SIZE);
+        }
+
+        function update() {
+            const newHead = {
+                x: snake[0].x + velocity.x,
+                y: snake[0].y + velocity.y
+            };
+
+            // Wrap around the canvas
+            if (newHead.x < 0) newHead.x = canvas.width - SNAKE_SIZE;
+            if (newHead.x >= canvas.width) newHead.x = 0;
+            if (newHead.y < 0) newHead.y = canvas.height - SNAKE_SIZE;
+            if (newHead.y >= canvas.height) newHead.y = 0;
+
+            // Check for collision with food
+            if (newHead.x === food.x && newHead.y === food.y) {
+                // Increase the snake's length
+                snake.unshift({ ...newHead });
+                // Generate new food
+                food = {
+                    x: Math.floor(Math.random() * canvas.width / SNAKE_SIZE) * SNAKE_SIZE,
+                    y: Math.floor(Math.random() * canvas.height / SNAKE_SIZE) * SNAKE_SIZE
+                };
+            } else {
+                // Move the snake
+                snake.pop();
+                snake.unshift({ ...newHead });
+            }
+
+            // Check for collision with self
+            if (snake.slice(1).some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+                clearInterval(gameLoop);
+                alert("Game Over!");
+            }
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawSnake();
+            drawFood();
+            update();
+        }
+
+        document.addEventListener("keydown", e => {
+            switch (e.key) {
+                case "ArrowLeft":
+                    velocity = { x: -SNAKE_SIZE, y: 0 };
+                    break;
+                case "ArrowRight":
+                    velocity = { x: SNAKE_SIZE, y: 0 };
+                    break;
+                case "ArrowUp":
+                    velocity = { x: 0, y: -SNAKE_SIZE };
+                    break;
+                case "ArrowDown":
+                    velocity = { x: 0, y: SNAKE_SIZE };
+                    break;
+            }
+        });
+
+        // Direction control button event listeners
+        const upButton = document.getElementById("upButton");
+        const downButton = document.getElementById("downButton");
+        const leftButton = document.getElementById("leftButton");
+        const rightButton = document.getElementById("rightButton");
+
+        upButton.addEventListener("click", () => {
+            velocity = { x: 0, y: -SNAKE_SIZE };
+        });
+
+        downButton.addEventListener("click", () => {
+            velocity = { x: 0, y: SNAKE_SIZE };
+        });
+
+        leftButton.addEventListener("click", () => {
+            velocity = { x: -SNAKE_SIZE, y: 0 };
+        });
+
+        rightButton.addEventListener("click", () => {
+            velocity = { x: SNAKE_SIZE, y: 0 };
+        });
+
+        setInterval(gameLoop, SPEED);
+    </script>
+</body>
+</html>

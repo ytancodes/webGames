@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        button {
+            font-size: 24px;
+            padding: 10px 20px;
+            margin: 5px;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 10px;
+            width: 270px;
+        }
+        .button-row {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <input type="text" id="result" readonly>
+    <br>
+    <div class="button-row">
+        <button onclick="appendToResult('7')">7</button>
+        <button onclick="appendToResult('8')">8</button>
+        <button onclick="appendToResult('9')">9</button>
+        <button onclick="appendToResult('/')">/</button>
+    </div>
+    <br>
+    <div class="button-row">
+        <button onclick="appendToResult('4')">4</button>
+        <button onclick="appendToResult('5')">5</button>
+        <button onclick="appendToResult('6')">6</button>
+        <button onclick="appendToResult('*')">*</button>
+    </div>
+    <br>
+    <div class="button-row">
+        <button onclick="appendToResult('1')">1</button>
+        <button onclick="appendToResult('2')">2</button>
+        <button onclick="appendToResult('3')">3</button>
+        <button onclick="appendToResult('-')">-</button>
+    </div>
+    <br>
+    <div class="button-row">
+        <button onclick="appendToResult('0')">0</button>
+        <button onclick="appendToResult('.')">.</button>
+        <button onclick="calculateResult()">=</button>
+        <button onclick="appendToResult('+')">+</button>
+    </div>
+    <br>
+    <div class="button-row">
+        <button onclick="calculateFactorial()">!</button>
+        <button onclick="clearResult()">C</button>
+    </div>
+    
+    <script>
+        let currentResult = "";
+
+        function appendToResult(value) {
+            currentResult += value;
+            document.getElementById("result").value = currentResult;
+        }
+
+        function clearResult() {
+            currentResult = "";
+            document.getElementById("result").value = "";
+        }
+
+        function calculateResult() {
+            try {
+                const result = eval(currentResult);
+                document.getElementById("result").value = result;
+                currentResult = String(result);
+            } catch (error) {
+                document.getElementById("result").value = "Error";
+                currentResult = "";
+            }
+        }
+
+        function calculateFactorial() {
+            try {
+                const number = parseInt(currentResult);
+                if (!isNaN(number) && number >= 0) {
+                    let result = 1;
+                    for (let i = 2; i <= number; i++) {
+                        result *= i;
+                    }
+                    document.getElementById("result").value = `${number}! = ${result}`;
+                    currentResult = String(result);
+                } else {
+                    document.getElementById("result").value = "Invalid Input";
+                    currentResult = "";
+                }
+            } catch (error) {
+                document.getElementById("result").value = "Error";
+                currentResult = "";
+            }
+        }
+    </script>
+</body>
+</html>

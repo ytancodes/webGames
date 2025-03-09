@@ -1,36 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2113.65">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-  </style>
-</head>
-<body>
-<p class="p1">{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"name": "Snake Game",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"short_name": "Snake",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"description": "A fun and simple snake game",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"start_url": "index.html",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"display": "standalone",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"background_color": "#ffffff",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"theme_color": "#4CAF50",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"icons": [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{</p>
-<p class="p1"><span class="Apple-converted-space">            </span>"src": "icons/icon-192x192.png",</p>
-<p class="p1"><span class="Apple-converted-space">            </span>"type": "image/png",</p>
-<p class="p1"><span class="Apple-converted-space">            </span>"sizes": "192x192"</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{</p>
-<p class="p1"><span class="Apple-converted-space">            </span>"src": "icons/icon-512x512.png",</p>
-<p class="p1"><span class="Apple-converted-space">            </span>"type": "image/png",</p>
-<p class="p1"><span class="Apple-converted-space">            </span>"sizes": "512x512"</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>]</p>
-<p class="p1">}</p>
-</body>
-</html>
+{
+    "name": "Snake Game",
+    "short_name": "Snake",
+    "description": "A fun and simple snake game",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4CAF50",
+    "icons": [
+        {
+            "src": "icons/icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "icons/icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

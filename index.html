@@ -13,6 +13,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-direction: column;
         }
 
         #gameContainer {
@@ -26,13 +27,29 @@
         }
 
         #directionButtons {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-top: 10px;
         }
 
         button {
-            margin: 5px;
+            padding: 10px;
             font-size: 18px;
+            cursor: pointer;
+        }
+
+        #upButton {
+            grid-column: 2;
+        }
+        #leftButton {
+            grid-column: 1;
+        }
+        #downButton {
+            grid-column: 2;
+        }
+        #rightButton {
+            grid-column: 3;
         }
     </style>
     <script>

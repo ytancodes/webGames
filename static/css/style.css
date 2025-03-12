@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    background: linear-gradient(45deg, #1a1a1a, #000000);
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.game-container {
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.retro-text {
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+#gameCanvas {
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 20px #00ffff;
+    background-color: rgba(0, 0, 0, 0.8);
+    touch-action: none;
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+.score-container {
+    font-size: 2em;
+    color: #00ffff;
+    margin-bottom: 20px;
+    user-select: none;
+}
+
+.score {
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.score-divider {
+    margin: 0 10px;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.controls-info {
+    margin-top: 20px;
+    text-align: center;
+    color: #00ffff;
+}
+
+.btn-neon {
+    background: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    margin: 10px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-neon:hover, .btn-neon:active {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 20px #00ffff;
+}
+
+@media (max-width: 768px) {
+    .retro-text {
+        font-size: 1.8em;
+    }
+
+    .score-container {
+        font-size: 1.5em;
+    }
+
+    #gameCanvas {
+        max-height: 60vh;
+    }
+}

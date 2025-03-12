@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vertical Pong</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="retro-text">
+            <h1>VERTICAL PONG</h1>
+        </div>
+        <div class="score-container">
+            <span class="score" id="aiScore">0</span>
+            <span class="score-divider">-</span>
+            <span class="score" id="playerScore">0</span>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="controls-info">
+            <p class="text-light">Touch and slide left/right to move paddle</p>
+            <button id="startButton" class="btn btn-neon">Start Game</button>
+            <button id="soundToggle" class="btn btn-neon">Sound: ON</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

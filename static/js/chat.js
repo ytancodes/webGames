@@ -1,6 +1,5 @@
-class Chat {
+class ChatBubble {
     constructor() {
-        this.socket = io();
         this.chatBubble = document.getElementById('chatBubble');
         this.chatMessages = document.getElementById('chatMessages');
         this.userNameInput = document.getElementById('userNameInput');
@@ -9,7 +8,6 @@ class Chat {
         this.minimizeButton = document.getElementById('minimizeChat');
 
         this.setupEventListeners();
-        this.setupSocketListeners();
     }
 
     setupEventListeners() {
@@ -28,47 +26,28 @@ class Chat {
         });
     }
 
-    setupSocketListeners() {
-        // Handle connection
-        this.socket.on('connect', () => {
-            console.log('Connected to chat server');
-        });
-
-        // Handle chat history
-        this.socket.on('chat_history', (messages) => {
-            messages.reverse().forEach(msg => this.addMessageToChat(msg));
-        });
-
-        // Handle new messages
-        this.socket.on('chat_message', (msg) => {
-            this.addMessageToChat(msg);
-        });
-    }
-
     sendMessage() {
         const message = this.messageInput.value.trim();
-        const userName = this.userNameInput.value.trim() || 'Anonymous';
+        const userName = this.userNameInput.value.trim() || 'You';
 
         if (message) {
-            this.socket.emit('new_message', {
-                user_name: userName,
-                message: message
-            });
+            this.addMessage(userName, message);
             this.messageInput.value = '';
+
+            // Simulate response
+            setTimeout(() => {
+                this.addMessage('Support', 'Thanks for your message! This is a demo response.');
+            }, 1000);
         }
     }
 
-    addMessageToChat(msg) {
+    addMessage(userName, message) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'chat-message';
-        
-        const time = new Date(msg.created_at).toLocaleTimeString();
         messageDiv.innerHTML = `
-            <span class="user-name">${msg.user_name}:</span>
-            <span class="message">${msg.message}</span>
-            <span class="timestamp">${time}</span>
+            <span class="user-name">${userName}:</span>
+            <span class="message">${message}</span>
         `;
-        
         this.chatMessages.appendChild(messageDiv);
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
@@ -76,5 +55,5 @@ class Chat {
 
 // Initialize chat when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new Chat();
+    new ChatBubble();
 });

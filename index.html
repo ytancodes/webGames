@@ -4,16 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item Selection and Total Calculator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            flex-direction: column;
-            text-align: center;
+            padding: 20px;
             font-family: Arial, sans-serif;
         }
 
@@ -82,6 +76,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
         }
 
         .minimize-btn {
@@ -90,6 +85,7 @@
             color: white;
             cursor: pointer;
             font-size: 18px;
+            padding: 0 5px;
         }
 
         .chat-messages {
@@ -116,18 +112,19 @@
             padding: 10px;
             border-top: 1px solid #eee;
             background: white;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .chat-input input {
-            width: calc(100% - 20px);
             padding: 8px;
-            margin-bottom: 5px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            margin-bottom: 5px;
         }
 
         .chat-input button {
-            width: 100%;
             padding: 8px;
             background: #4a90e2;
             color: white;
@@ -178,7 +175,6 @@
                 alert("Invalid item code.");
             }
         }
-
         function sendPixelEvent() {
             if (typeof fbq !== "function") {
                 console.error("Meta Pixel (fbq) is not defined. Make sure the script is loaded.");
@@ -205,10 +201,7 @@
             fbq('trackCustom', 'CustomerEvent', eventData);
             alert('Customer data sent to Facebook Pixel!');
         }
-
-        // Chat functionality
         document.addEventListener('DOMContentLoaded', () => {
-            const socket = io();
             const chatBubble = document.getElementById('chatBubble');
             const chatMessages = document.getElementById('chatMessages');
             const userNameInput = document.getElementById('userNameInput');
@@ -221,41 +214,31 @@
                 minimizeButton.textContent = chatBubble.classList.contains('minimized') ? '+' : '_';
             });
 
-            socket.on('connect', () => {
-                console.log('Connected to chat server');
-            });
-
-            socket.on('chat_history', (messages) => {
-                messages.reverse().forEach(msg => addMessageToChat(msg));
-            });
-
-            socket.on('chat_message', (msg) => {
-                addMessageToChat(msg);
-            });
-
-            function addMessageToChat(msg) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'chat-message';
-                const time = new Date(msg.created_at).toLocaleTimeString();
-                messageDiv.innerHTML = `
-                    <span class="user-name">${msg.user_name}:</span>
-                    <span class="message">${msg.message}</span>
-                    <span class="timestamp">${time}</span>
-                `;
-                chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
             function sendMessage() {
                 const message = messageInput.value.trim();
-                const userName = userNameInput.value.trim() || 'Anonymous';
+                const userName = userNameInput.value.trim() || 'You';
 
                 if (message) {
-                    socket.emit('new_message', {
-                        user_name: userName,
-                        message: message
-                    });
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'chat-message';
+                    messageDiv.innerHTML = `
+                        <span class="user-name">${userName}:</span>
+                        <span class="message">${message}</span>
+                    `;
+                    chatMessages.appendChild(messageDiv);
                     messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    setTimeout(() => {
+                        const responseDiv = document.createElement('div');
+                        responseDiv.className = 'chat-message';
+                        responseDiv.innerHTML = `
+                            <span class="user-name">Support:</span>
+                            <span class="message">Thanks for your message! This is a demo response.</span>
+                        `;
+                        chatMessages.appendChild(responseDiv);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
                 }
             }
 
@@ -265,7 +248,6 @@
             });
         });
     </script>
-
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -336,7 +318,13 @@
             <span>Developer Support</span>
             <button class="minimize-btn" id="minimizeChat">_</button>
         </div>
-        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Demo messages -->
+            <div class="chat-message">
+                <span class="user-name">Support:</span>
+                <span class="message">Hello! How can I help you today?</span>
+            </div>
+        </div>
         <div class="chat-input">
             <input type="text" id="userNameInput" placeholder="Your name" maxlength="30">
             <input type="text" id="messageInput" placeholder="Type a message..." maxlength="500">

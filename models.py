@@ -16,3 +16,17 @@ class GameScore(db.Model):
             'duration': self.duration,
             'created_at': self.created_at.isoformat()
         }
+
+class ChatMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String(64), nullable=False)
+    message = db.Column(db.String(500), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_name': self.user_name,
+            'message': self.message,
+            'created_at': self.created_at.isoformat()
+        }

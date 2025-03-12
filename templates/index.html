@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vertical Pong</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
 <body>
     <div class="game-container">
@@ -23,7 +24,23 @@
             <button id="soundToggle" class="btn btn-neon">Sound: ON</button>
         </div>
     </div>
+
+    <!-- Chat Bubble -->
+    <div class="chat-bubble" id="chatBubble">
+        <div class="chat-header">
+            <span>Developer Support</span>
+            <button class="minimize-btn" id="minimizeChat">_</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="userNameInput" placeholder="Your name" maxlength="30">
+            <input type="text" id="messageInput" placeholder="Type a message..." maxlength="500">
+            <button id="sendMessage" class="btn-neon">Send</button>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
     <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>
